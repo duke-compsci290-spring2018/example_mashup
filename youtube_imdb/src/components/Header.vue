@@ -8,7 +8,7 @@
         :onEnter="onSearch"
         />
     <el-button class="search-button" @click="onSearch">Search Trailers</el-button>
-    <el-button class="search-button" @click="loaded = false">Upcoming Movies</el-button>
+    <el-button class="search-button" @click="returnToUpcoming">Upcoming Movies</el-button>
 </Flex>
 </template>
 
@@ -34,10 +34,10 @@ export default {
             type: Function,
             required: true
         },
-        loaded: {
-            type: Boolean,
+        returnToUpcoming: {
+            type: Function,
             required: true
-        }
+        },
     },
     components: {
         Flex,

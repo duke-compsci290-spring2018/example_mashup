@@ -6,7 +6,7 @@
         :term="term"
         :onTermChange="handleTermChange"
         :onSearch="getData"
-        :onUpcoming="loaded"
+        :returnToUpcoming="returnToUpcoming"
         />
     <Flex id="app-body">
         <Flex auto v-if="loaded">
@@ -40,7 +40,7 @@ import UpcomingMovies from './components/UpcomingMovies.vue'
 // package imports
 import axios from 'axios'
 // local imports
-import { YOUTUBE_KEY, OMDB_KEY, TMDB_KEY } from './secrets'
+import { YOUTUBE_KEY, OMDB_KEY } from './secrets'
 
 export default {
     name: 'App',
@@ -51,7 +51,6 @@ export default {
             activeVideo: null,
             loaded: false,
             imdbData: null,
-            tmdbData: null,
         }
     },
     created: function() {
@@ -71,18 +70,14 @@ export default {
         getImdbData() {
             return axios.get(`http://www.omdbapi.com/?apikey=${OMDB_KEY}&r=json&t=${this.term}`)
         },
-        getTmdbData() {
-            return axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_KEY}&query=${this.term}`)
-        },
         // make requests to both API endpoints
         getData() {
             if (this.term) {
-                Promise.all([this.getVideos(), this.getImdbData(), this.getTmdbData()])
-                       .then(([youtubeData, imdbData, tmdbData]) => {
+                Promise.all([this.getVideos(), this.getImdbData()])
+                       .then(([youtubeData, imdbData]) => {
                             this.videos = youtubeData.data.items
                             this.activeVideo = this.videos[0]
                             this.imdbData = imdbData.data
-                            this.tmdbData = tmdbData.data.results[0]
                             this.loaded = true
                         })
             }
@@ -96,6 +91,9 @@ export default {
         handleUpcomingMovieClick(title) {
             this.term = title
             this.getData()
+        },
+        returnToUpcoming() {
+            this.loaded = false;
         }
     },
     components: {
