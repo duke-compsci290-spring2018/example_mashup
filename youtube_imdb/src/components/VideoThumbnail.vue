@@ -14,23 +14,33 @@
 </template>
 
 <script>
+/**
+ * Displays a thumbnail of a youtube video
+ */
 import Flex from './Flex'
 
 export default {
     props: {
+        // One of the video objects returned from the Youtube search
+        // API endpoint
         video: {
             type: Object,
         },
+        // Click handler for the component
         onClick: {
             type: Function,
             default: function() {
                 return () => {}
             }
         },
+        // Specifies whether this thumbnail is active and the one that is
+        // currently being displayed by <MovieDetail />
         active: {
             type: Boolean,
             default: false,
         },
+        // Specifies the quality of the thumbnail to choose (the API returns
+        // more than one quality for the thumbnail image)
         quality: {
             type: String,
             default: 'default',
@@ -40,6 +50,7 @@ export default {
         }
     },
     computed: {
+        // convenience computed property
         thumbnail () {
             return this.video.snippet.thumbnails[this.quality]
         }

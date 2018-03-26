@@ -13,21 +13,29 @@
 </template>
 
 <script>
+/**
+ * This is the component that displays when the user has serached for a video.
+ * It shows an embedded youtube video and some information from IMDB about the 
+ * director, rating, etc (housed in the <ImdbInfo /> component)
+ */
 import Flex from './Flex'
 import ImdbInfo from './ImdbInfo'
 
 export default {
     props: {
+        // The object returned from the Youtube API
         video: {
             type: Object,
             required: true,
         },
+        // The object returned from the OMDB API
         imdbData: {
             type: Object,
             required: true,
         }
     },
     computed: {
+        // Just a convenience property to make the template cleaner
         url () {
             return `https://www.youtube.com/embed/${this.video.id.videoId}`
         }

@@ -6,25 +6,45 @@
 
 <script>
 /**
- * A helper component for using flexbox
+ * A helper component for using flexbox. Basically it is just a div that
+ * uses flexbox by default and it provides prop that handle basic flexbox
+ * styling rules. For example, <Flex column></Flex> basically creates a 
+ * div with the css rules:
+ * {
+ *   display: flex;
+ *   flex-direction: column;
+ * }
+ *
+ * Note that for click handlers you need to add the .native modifier so
+ * that it adds an event listener to the root div in the template rather
+ * than the compnent itself.
  */
 export default {
     name: 'Flex',
     props: {
+        // Specify the flex direction of the div. The default in flex
+        // is 'row' unless this is specified
         column: {
             type: Boolean,
             default: false,
         },
+        // Specify whether this element should grow...basically translates
+        // to `flex: 1 1 auto;`
         auto: {
             type: Boolean,
             default: false,
         },
+        // Specify the 'justify-content' attribute...should be either 'flex-start',
+        // 'center', or 'flex-end'
         justify: {
             type: String,
         },
+        // Specify the 'align-items' attribute...should be either 'flex-start',
+        // 'center', or 'flex-end'
         align: {
             type: String,
         },
+        // Specify the 'flex-wrap' property...defaults to 'no-wrap' if not supplied
         wrap: {
             type: Boolean,
             default: false,
