@@ -15,13 +15,19 @@
 </template>
 
 <script>
-// displays upcoming movies gotten from TMDB
+/**
+ * Displays upcoming movies gotten from TMDB in a flexbox grid. This is the 
+ * view that is displayed to the user if they have not yet entered a search
+ * term.
+ */
 import Flex from './Flex'
 import axios from 'axios'
 import { TMDB_KEY } from '../secrets'
 
 export default {
     props: {
+        // A function handler for when the user presses one of the movies
+        // in the grid
         onMovieClick: {
             type: Function,
             default: function() {
@@ -36,6 +42,7 @@ export default {
     },
     computed: {
         topMovies() {
+            // Only show the first 18 movies
             return this.movies.slice(0, 18)
         }
     },
@@ -43,6 +50,7 @@ export default {
         this.getUpcomingMovies()
     },
     methods: {
+        // Get upcoming movies from the TMDB API. 
         getUpcomingMovies() {
             const params = {
                 api_key: TMDB_KEY,
